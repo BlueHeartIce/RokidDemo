@@ -1,0 +1,91 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    id 'kotlin-kapt'
+    id 'org.greenrobot.greendao'
+}
+
+android {
+    namespace 'com.blue.armobile'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.blue.armobile"
+        minSdk 28
+        targetSdk 33
+        versionCode 2
+        versionName "1.0.1"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+    implementation libs.androidx.fragment.ktx // Fragment + viewModels()
+    implementation libs.androidx.activity.ktx // Activity + viewModels()
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+
+    // eventbus
+    implementation libs.eventbus
+    implementation libs.rokid.cxr.m
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.okio)
+    implementation(libs.gson)
+    implementation(libs.logging.interceptor)
+    implementation libs.greendao
+    // 动画库
+    implementation libs.library
+
+    // util库
+    implementation 'com.blankj:utilcodex:1.31.1'
+
+    // Retrofit网络通信库
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    // rxjava
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    // glide
+    implementation libs.glide
+}
+
+greendao {
+    schemaVersion 1
+    daoPackage 'com.blue.glassesapp.core.db.dao'
+    targetGenDir 'src/main/java'
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.internal.KaptGenerateStubsTask).configureEach {
+    dependsOn(":app:greendao")
+}

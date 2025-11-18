@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.blue.glassesapp.feature.home.vm.HomeVm" />
+    </data>
+
+    <com.qmuiteam.qmui.layout.QMUIConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/qmui_config_color_background">
+
+        <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/qmui_config_color_transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:qmui_bottomDividerHeight="0dp" />
+
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_bar">
+
+            <com.qmuiteam.qmui.widget.QMUIAppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                android:fitsSystemWindows="true">
+
+                <com.qmuiteam.qmui.widget.QMUICollapsingTopBarLayout
+                    android:id="@+id/collapsing_topbar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="?attr/qmui_topbar_height"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:qmui_collapsedTitleGravity="center"
+                    app:qmui_contentScrim="?attr/qmui_config_color_blue"
+                    app:qmui_expandedTitleGravity="center_horizontal|bottom"
+                    app:qmui_expandedTitleMarginBottom="20dp"
+                    app:qmui_followTopBarCommonSkin="true"
+                    app:qmui_statusBarScrim="?attr/qmui_config_color_blue">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:qmui_layout_collapseMode="parallax"
+                        app:qmui_layout_collapseParallaxMultiplier="0.7">
+
+                        <ImageView
+                            android:id="@+id/img_glasses"
+                            android:layout_width="333dp"
+                            android:layout_height="125dp"
+                            android:layout_marginTop="12dp"
+                            android:fitsSystemWindows="false"
+                            android:src="@drawable/img_glasses_front_home"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_glasses_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{model.glassesInfo.name}"
+                            android:textSize="24sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/img_glasses" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minHeight="40dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_glasses_name">
+
+                            <TextView
+                                android:id="@+id/tv_power_level"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:gravity="center"
+                                android:text="100%"
+                                android:textColor="@color/text_tertiary"
+                                android:textSize="@dimen/text_body2"
+                                app:batteryLevelText="@{model.glassesInfo.battery}"
+                                app:deviceConnected="@{model.glassesInfo.glassesLinkState}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="@string/device_connecting"
+                                android:textColor="@color/text_primary"
+                                android:textSize="@dimen/text_caption"
+                                android:visibility="gone"
+                                app:deviceConnecting="@{model.glassesInfo.glassesLinkState}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                                android:id="@+id/btn_to_connect"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:paddingHorizontal="18dp"
+                                android:paddingVertical="6dp"
+                                android:visibility="gone"
+                                app:deviceNoConnect="@{model.glassesInfo.glassesLinkState}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:qmui_isRadiusAdjustBounds="true" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.qmuiteam.qmui.widget.QMUITopBar
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:fitsSystemWindows="true"
+                        app:qmui_bottomDividerHeight="0px"
+                        app:qmui_layout_collapseMode="pin" />
+                </com.qmuiteam.qmui.widget.QMUICollapsingTopBarLayout>
+            </com.qmuiteam.qmui.widget.QMUIAppBarLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+
+                    <!-- 音量、亮度调节 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp">
+
+                        <com.qmuiteam.qmui.layout.QMUILinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="12dp"
+                            app:qmui_radius="6dp"
+                            app:qmui_shadowAlpha="0.5"
+                            app:qmui_shadowElevation="6dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="音量"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp" />
+
+                            <SeekBar
+                                android:id="@+id/seek_bar_volume"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:progress="@{model.glassesInfo.volume}" />
+                        </com.qmuiteam.qmui.layout.QMUILinearLayout>
+
+                        <com.qmuiteam.qmui.layout.QMUILinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="12dp"
+                            app:qmui_radius="6dp"
+                            app:qmui_shadowAlpha="0.5"
+                            app:qmui_shadowElevation="6dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="亮度"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp" />
+
+                            <SeekBar
+                                android:id="@+id/seek_bar_brightness"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:progress="@{model.glassesInfo.brightness}" />
+                        </com.qmuiteam.qmui.layout.QMUILinearLayout>
+                    </LinearLayout>
+
+                    <!-- 功能区 -->
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="2"
+                        android:padding="8dp"
+                        android:rowCount="5">
+
+                        <com.qmuiteam.qmui.layout.QMUIConstraintLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="12dp"
+                            app:qmui_radius="6dp"
+                            app:qmui_shadowAlpha="0.5"
+                            app:qmui_shadowElevation="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="当前模式"
+                                android:textColor="#888"
+                                android:textSize="12sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <TextView
+                                android:id="@+id/tv_action_tittle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="拍照AI场景"
+                                android:textColor="@android:color/black"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_action_desc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="默认AI交互场景"
+                                android:textColor="#888"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tv_action_tittle" />
+                        </com.qmuiteam.qmui.layout.QMUIConstraintLayout>
+
+                        <com.qmuiteam.qmui.layout.QMUILinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:padding="12dp"
+                            android:visibility="invisible"
+                            app:qmui_radius="6dp"
+                            app:qmui_shadowAlpha="0.5"
+                            app:qmui_shadowElevation="8dp">
+
+                        </com.qmuiteam.qmui.layout.QMUILinearLayout>
+                    </GridLayout>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.qmuiteam.qmui.layout.QMUIConstraintLayout>
+
+</layout>

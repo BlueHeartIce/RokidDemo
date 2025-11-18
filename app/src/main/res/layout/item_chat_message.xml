@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <!-- 消息时间 -->
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="4dp"
+            android:textAlignment="center"
+            android:textColor="#999"
+            android:textSize="12sp" />
+
+        <!-- 左侧头像（可选） -->
+        <ImageView
+            android:id="@+id/ivAvatarLeft"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_below="@id/tvTime"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/icon_setting" />
+
+        <!-- 右侧头像（可选） -->
+        <ImageView
+            android:id="@+id/ivAvatarRight"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_below="@id/tvTime"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/icon_setting" />
+
+        <!-- 气泡主体 -->
+        <LinearLayout
+            android:id="@+id/layoutBubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTime"
+            android:layout_toStartOf="@id/ivAvatarRight"
+            android:layout_toEndOf="@id/ivAvatarLeft"
+            android:background="@drawable/bg_chat_bubble_send"
+            android:maxWidth="280dp"
+            android:orientation="vertical"
+            android:padding="12dp">
+            <!-- 文本内容 -->
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="2dp"
+                android:maxWidth="280dp"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <!-- 图片内容 -->
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="180dp"
+            android:layout_below="@id/tvTime"
+            android:layout_toStartOf="@id/ivAvatarRight"
+            android:layout_toEndOf="@id/ivAvatarLeft"
+            android:layout_height="320dp"
+            android:layout_marginTop="4dp"
+            android:adjustViewBounds="true"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</layout>

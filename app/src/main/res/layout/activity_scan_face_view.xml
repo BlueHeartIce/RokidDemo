@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.qmuiteam.qmui.layout.QMUILinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.qmuiteam.qmui.widget.QMUITopBarLayout
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_glass"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TableLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:stretchColumns="1"
+                android:layout_marginStart="20dp"
+                android:layout_height="match_parent">
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="姓名:" />
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                </TableRow>
+                <TableRow android:layout_marginTop="6dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工号:" />
+                    <TextView
+                        android:id="@+id/tv_work_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </TableRow>
+                <TableRow android:layout_marginTop="6dp">
+                    <TextView
+                        android:id="@+id/tv_pass"
+                        android:text="可通行"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/qmui_config_color_background"
+            android:fitsSystemWindows="true">
+
+            <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+                android:id="@+id/groupListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+    </com.qmuiteam.qmui.layout.QMUILinearLayout>
+    <!--        <android.inputmethodservice.ExtractEditText-->
+    <!--            android:id="@+id/edit_test_text"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginHorizontal="16dp"-->
+    <!--            android:text="姓名：张三，工号：9527，可通行"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/camera_info" />-->
+
+
+</layout>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.blue.glassesapp.feature.home.vm.HomeVm" />
+    </data>
+
+    <com.qmuiteam.qmui.layout.QMUIConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/qmui_config_color_background">
+
+        <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/qmui_config_color_transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:qmui_bottomDividerHeight="0dp"
+            app:qmui_shadowElevation="0dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_glassed_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/top_bar">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:deviceConnected="@{model.glassesInfo.glassesLinkState}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="@dimen/text_body2"
+                    app:batteryLevelImage="@{model.glassesInfo.battery}"
+                    app:charging="@{model.glassesInfo.charging}" />
+
+                <TextView
+                    android:id="@+id/tv_power_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="100%"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="@dimen/text_body2"
+                    app:batteryLevelText="@{model.glassesInfo.battery}" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/icon_glasses"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="6dp"
+                android:text="@{model.glassesInfo.glassesLinkState.value}"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_body2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_glassed_state" />
+
+    </com.qmuiteam.qmui.layout.QMUIConstraintLayout>
+
+</layout>
