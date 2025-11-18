@@ -23,3 +23,9 @@ qmuilibrary：是打包出来的aar包，部分可能存在问题，
 开发者可以通过CXR-M SDK 快速接入YodaOS-Sprite 操作系统定义的场景交互流程。快速根据YodaOS-Sprite
 定义的交互场景进行自定义动能开发。
 
+
+因为sdk版本是1.0.3
+搭配使用自己的眼睛的时候需要修改一下两处
+1.res/raw/sn.lc 文件 修改为自己的鉴权文件
+2.CommonModel中CLIENT_SECRET修改为自己的密钥
+
