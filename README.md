@@ -29,3 +29,5 @@ qmuilibrary：是打包出来的aar包，部分可能存在问题，
 1.res/raw/sn.lc 文件 修改为自己的鉴权文件
 2.CommonModel中CLIENT_SECRET修改为自己的密钥
 
+ 详情看 https://forum.rokid.com/post/detail/2385
+
