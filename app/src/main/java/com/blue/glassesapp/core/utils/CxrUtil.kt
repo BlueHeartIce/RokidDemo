@@ -307,7 +307,9 @@ object CxrUtil {
                     }
                     action(GlassesLinkState.CONNECT_FAILED)
                 }
-            }, readRawFile(context), CommonModel.CLIENT_SECRET)
+            },
+//                readRawFile(context), CommonModel.CLIENT_SECRET
+            )
         initGlassesListener()
     }
 

@@ -16,9 +16,10 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+
     }
 }
 
-rootProject.name = "XYARMobile"
+rootProject.name = "Rokid Demo"
 include ':app'
 
