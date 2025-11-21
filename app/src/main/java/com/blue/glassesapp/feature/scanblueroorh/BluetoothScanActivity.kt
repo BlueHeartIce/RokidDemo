@@ -224,7 +224,7 @@ class BluetoothScanActivity :
                 } catch (e: SecurityException) {
                     null
                 }
-                if (ActivityCompat.checkSelfPermission(
+                if (  Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ActivityCompat.checkSelfPermission(
                         this@BluetoothScanActivity, Manifest.permission.BLUETOOTH_CONNECT
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
