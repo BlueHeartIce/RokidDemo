@@ -153,92 +153,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     }
 
-    // photo result callback
-    private val result = object : PhotoResultCallback {
-        /**
-         * photo result callback
-         *
-         * @param status photo take status
-         * @see ValueUtil.CxrStatus
-         * @see ValueUtil.CxrStatus.RESPONSE_SUCCEED response succeed
-         * @see ValueUtil.CxrStatus.RESPONSE_INVALID response invalid
-         * @see ValueUtil.CxrStatus.RESPONSE_TIMEOUT response timeout
-         * @param photo WebP photo data byte array
-         */
-
-        override fun onPhotoResult(
-            status: ValueUtil.CxrStatus?,
-            photo: ByteArray?,
-        ) {
-            LogUtils.i(
-                "SelfDesignViewActivity",
-                "takePhotoResult onPhotoResult: status=$status, photo size=${photo?.size}"
-            )
 
 
-            MainScope().launch {
-                ImageUtils.bytes2Bitmap(photo).let {
-                    LogUtils.d(
-                        "SelfDesignViewActivity",
-                        "takePhotoResult bitmap size=${it.width}, ${it.height}"
-                    )
-                    findViewById<ImageView>(R.id.img_glass).setImageBitmap(it)
 
-                    if (CommonModel.useCustomView) {
-                        showCustomView("模拟返回数据")
-                    } else {
-                        sendTtsFeedback("模拟返回数据")
-                    }
-                }
-            }
-        }
-
-
-        /**
-         * 发送TTS反馈到眼镜端（由眼镜播放语音）
-         */
-        private fun sendTtsFeedback(feedbackText: String) {
-            LogUtils.d("发送TTS反馈：$feedbackText")
-            val status =
-                CxrApi.getInstance().sendGlobalMsgContent(0, feedbackText, CommonModel.useTTS)
-            LogUtils.e("TTS反馈发送失败，状态：$status")
-        }
-    }
-
-
-    /**
-     * open ai camera
-     *
-     * @param width photo width
-     * @param height photo height
-     * @param quality photo quality range [0-100]
-     *
-     * @return open camera result
-     * @see ValueUtil.CxrStatus
-     * @see ValueUtil.CxrStatus.REQUEST_SUCCEED request succeed
-     * @see ValueUtil.CxrStatus.REQUEST_WAITING request waiting, do not request again
-     * @see ValueUtil.CxrStatus.REQUEST_FAILED request failed
-     */
-    fun aiOpenCamera(width: Int, height: Int, quality: Int): ValueUtil.CxrStatus? {
-        return CxrApi.getInstance().openGlassCamera(width, height, quality)
-    }
-
-    /**
-     * take photo
-     *
-     * @param width photo width
-     * @param height photo height
-     * @param quality photo quality range[0-100]
-     *
-     * @return take photo result
-     * @see ValueUtil.CxrStatus
-     * @see ValueUtil.CxrStatus.REQUEST_SUCCEED request succeed
-     * @see ValueUtil.CxrStatus.REQUEST_WAITING request waiting, do not request again
-     * @see ValueUtil.CxrStatus.REQUEST_FAILED request failed
-     */
-    fun takePhotoResult(width: Int, height: Int, quality: Int): ValueUtil.CxrStatus? {
-        return CxrApi.getInstance().takeGlassPhoto(width, height, quality, result)
-    }
 
 
     /**
