@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.blue.glassesapp.feature.home.vm.HomeVm" />
+
+
+        <import type="android.text.TextUtils" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/mIbKeyboardPower"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/sel_ddap_small_button"
+            android:src="@mipmap/dpad_shutdown"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:minHeight="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/device_connected"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_caption"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visible="@{model.hidLinkModel.deviceConnected}" />
+
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                android:id="@+id/btn_to_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="6dp"
+                android:text="@string/go_connect"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:qmui_isRadiusAdjustBounds="true"
+                app:visible="@{!model.hidLinkModel.deviceConnected}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_volume"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="60dp"
+            android:background="@mipmap/dpad_volume_background"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/mIbKeyboardVolumeDown"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@mipmap/dpad_volume_left"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/mIbKeyboardVolumeUp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/mIbKeyboardVolumeUp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@mipmap/dpad_volume_right"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/mIbKeyboardVolumeDown"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/mIbKeyboardHome"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/sel_ddap_small_button"
+            android:src="@mipmap/dpad_home"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/mIbKeyboardPower" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mTvTips"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/dpad_tips_bg"
+            android:drawableLeft="@mipmap/dpad_tips_icon"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@{model.hidLinkModel.error}"
+            android:textColor="#8C8C8C"
+            android:textSize="13sp"
+            app:layout_constraintTop_toBottomOf="@+id/mIbKeyboardPower"
+            tools:layout_editor_absoluteX="40dp" />
+
+
+        <GridLayout
+            android:id="@+id/grid_remote_keys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alignmentMode="alignMargins"
+            android:columnCount="3"
+            android:columnOrderPreserved="false"
+            android:padding="16dp"
+            android:rowCount="3"
+            android:rowOrderPreserved="false"
+            android:useDefaultMargins="true"
+            app:layout_constraintBottom_toTopOf="@id/cl_volume"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mTvTips">
+
+            <!-- 第一行 -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_row="0"
+                android:layout_column="0" />
+
+
+            <com.qmuiteam.qmui.layout.QMUIButton
+                android:id="@+id/btn_up"
+                style="?QMUIButtonStyle"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:text="↑"
+                android:textSize="27sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_row="0"
+                android:layout_column="2" />
+
+            <!-- 第二行 -->
+
+            <com.qmuiteam.qmui.layout.QMUIButton
+                android:id="@+id/btn_left"
+                style="?QMUIButtonStyle"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:text="←"
+                android:textSize="27sp" />
+
+            <com.qmuiteam.qmui.layout.QMUIButton
+                android:id="@+id/btn_center"
+                style="?QMUIButtonStyle"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:text="OK"
+                android:textSize="24sp" />
+
+
+            <com.qmuiteam.qmui.layout.QMUIButton
+                android:id="@+id/btn_right"
+                style="?QMUIButtonStyle"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:text="→"
+                android:textSize="27sp" />
+
+            <!-- 第三行 -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_row="2"
+                android:layout_column="0" />
+
+
+            <com.qmuiteam.qmui.layout.QMUIButton
+                android:id="@+id/btn_down"
+                style="?QMUIButtonStyle"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:text="↓"
+                android:textSize="27sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_row="2"
+                android:layout_column="2" />
+
+        </GridLayout>
+
+
+        <!--        <com.blue.glassesapp.common.widget.DirectionDpadView-->
+        <!--            android:id="@+id/mDirectionDpadView"-->
+        <!--            android:layout_width="280dp"-->
+        <!--            android:layout_height="280dp"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:visibility="gone"-->
+        <!--            app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/mTvTips" />-->
+
+        <!--        <androidx.appcompat.widget.AppCompatImageButton-->
+        <!--            android:id="@+id/mIbKeyboardMenu"-->
+        <!--            android:layout_width="60dp"-->
+        <!--            android:layout_height="60dp"-->
+        <!--            android:layout_marginStart="40dp"-->
+        <!--            android:layout_marginLeft="40dp"-->
+        <!--            android:layout_marginBottom="60dp"-->
+        <!--            android:background="@drawable/sel_ddap_small_button"-->
+        <!--            android:src="@mipmap/dpad_menu"-->
+        <!--            android:visibility="gone"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintLeft_toLeftOf="parent" />-->
+
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/mIbKeyboardBack"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/sel_ddap_small_button"
+            android:src="@mipmap/dpad_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

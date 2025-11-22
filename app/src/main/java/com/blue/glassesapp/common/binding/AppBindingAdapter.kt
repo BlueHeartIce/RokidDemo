@@ -72,4 +72,13 @@ object AppBindingAdapter {
             view.text = "电量:$level %"
         }
     }
+
+    /**
+     * view是否显示
+     */
+    @JvmStatic
+    @BindingAdapter("visible")
+    fun setVisible(view: View, visible: Boolean) {
+        view.isVisible = visible
+    }
 }

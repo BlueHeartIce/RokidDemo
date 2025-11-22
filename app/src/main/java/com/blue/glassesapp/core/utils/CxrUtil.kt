@@ -4,6 +4,7 @@ import android.Manifest
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import androidx.annotation.RequiresPermission
+import com.blankj.utilcode.util.FileIOUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blue.armobile.R
@@ -13,6 +14,9 @@ import com.rokid.cxr.client.extend.CxrApi
 import com.rokid.cxr.client.extend.callbacks.BluetoothStatusCallback
 import com.rokid.cxr.client.extend.listeners.CustomViewListener
 import com.rokid.cxr.client.utils.ValueUtil
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 object CxrUtil {
     const val TAG = "CxrUtil"
@@ -223,21 +227,6 @@ object CxrUtil {
      *  @param socketUuid   Socket UUID
      *  @param macAddress   Classic Bluetooth MAC Address  snEncryptContent:" + var5 + ",clientSecret:" + var6
      */
-    /**
-     * snEncrypt 鉴权文件
-     * clientSecret 客户端密钥
-     */
-    fun connectBluetooth(
-        context: Context,
-        socketUuid: String,
-        macAddress: String,
-        callback: BluetoothStatusCallback,
-        snEncrypt: ByteArray,
-        clientSecret: String,
-    ) {
-
-    }
-
     fun connectGlasses(
         context: Context,
         deviceName: String,
@@ -248,7 +237,6 @@ object CxrUtil {
         LogUtils.i(TAG, "connectGlasses: socketUuid=$socketUuid, macAddress=$macAddress")
         CommonModel.glassesInfo.glassesLinkState = GlassesLinkState.CONNECTING
         action(GlassesLinkState.CONNECTING)
-
         CxrApi.getInstance()
             .connectBluetooth(
                 context, socketUuid, macAddress, object : BluetoothStatusCallback {
@@ -352,6 +340,7 @@ object CxrUtil {
     /**
      * 初始化眼睛连接
      */
+    @androidx.annotation.RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT)
     fun initGlassesLink(appContext: Context, action: (GlassesLinkState) -> Unit) {
         if (CommonModel.deviceMacAddress.isNotEmpty()) {
             connectGlasses(
@@ -361,6 +350,13 @@ object CxrUtil {
                 CommonModel.deviceMacAddress,
                 action
             )
+            MainScope().launch{
+                while (true) {
+                    delay(5000)
+
+//                    HidUitls.connect(CommonModel.deviceMacAddress)
+                }
+            }
         }
     }
 
@@ -400,10 +396,12 @@ object CxrUtil {
      * 读取raw目录下的.lc 文件
      */
     fun readRawFile(context: Context): ByteArray {
-        val inputStream = context.resources.openRawResource(R.raw.sn)
+        val inputStream = context.resources.openRawResource(R.raw.a1e15aabfb1e4a88bbaf97e31121a84b)
         val bytes = inputStream.readBytes()
         return bytes
     }
+
+
 
 
 }

@@ -3,6 +3,7 @@
 
     <string name="battery_level">电量%1$d%%</string>
     <string name="device_connecting">连接中...</string>
+    <string name="device_connected">已连接</string>
     <string name="go_pair_up">去配对</string>
     <string name="go_connect">去连接</string>
 </resources>

@@ -62,9 +62,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.blue.glassesapp.feature.scanface.ScanFaceActivity"
-            android:exported="true" />
-        <activity
             android:name="com.blue.glassesapp.feature.scanblueroorh.BluetoothScanActivity"
             android:exported="true" />
         <activity
@@ -85,6 +82,12 @@
 
             android:exported="false"
             android:foregroundServiceType="connectedDevice|dataSync" />
+
+        <service
+            android:name="com.blue.glassesapp.feature.home.ui.hid.BluetoothHidService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
     </application>
 
 

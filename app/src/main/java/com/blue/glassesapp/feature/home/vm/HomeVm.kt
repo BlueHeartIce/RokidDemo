@@ -1,6 +1,8 @@
 package com.blue.glassesapp.feature.home.vm
 
 import android.app.Application
+import android.bluetooth.BluetoothManager
+import android.content.Context
 import android.graphics.Bitmap
 import android.util.Size
 import androidx.lifecycle.AndroidViewModel
@@ -11,12 +13,14 @@ import com.blankj.utilcode.util.TimeUtils
 import com.blue.glassesapp.common.enums.BusinessType
 import com.blue.glassesapp.common.enums.InteractionDirection
 import com.blue.glassesapp.common.model.GlassesLinkState
+import com.blue.glassesapp.common.model.bindmodel.HidLinkModel
 import com.blue.glassesapp.core.db.DBManager
 import com.blue.glassesapp.core.db.entity.GlassesRecordModel
 import com.blue.glassesapp.core.utils.AppInternalFileUtil
 import com.blue.glassesapp.core.utils.AppTimeUtils
 import com.blue.glassesapp.core.utils.CommonModel
 import com.blue.glassesapp.core.utils.CxrUtil
+import com.blue.glassesapp.core.utils.hid.BluetoothHidManager
 import com.blue.glassesapp.feature.home.ui.adapter.RecordAdapter
 import com.rokid.cxr.client.extend.CxrApi
 import com.rokid.cxr.client.extend.callbacks.PhotoResultCallback
@@ -41,6 +45,7 @@ class HomeVm(val appContext: Application) : AndroidViewModel(appContext) {
     val TAG = this.javaClass.simpleName
     val glassesInfo = MutableLiveData(CommonModel.glassesInfo)
     var recordModelList = ArrayList<GlassesRecordModel>()
+    var hidLinkModel = MutableLiveData(BluetoothHidManager.hidState)
     var recordAdapter: RecordAdapter = RecordAdapter(recordModelList)
 
     // 当前业务类型
@@ -65,10 +70,12 @@ class HomeVm(val appContext: Application) : AndroidViewModel(appContext) {
             CxrUtil.initGlassesLink(appContext.applicationContext) {
                 if (it == GlassesLinkState.CONNECTED) {
 
+                        BluetoothHidManager.initLink(appContext, CommonModel.deviceMacAddress)
                 }
             }
         }
     }
+
 
     /**
      * 初始化业务场景

@@ -1,6 +1,7 @@
 package com.blue.glassesapp.feature.home.ui
 
 import android.bluetooth.BluetoothDevice
+import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -9,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.ImageUtils
@@ -55,6 +57,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
     }
 
+
     override fun onResume() {
         super.onResume()
         viewModel.linkGlasses()
@@ -64,6 +67,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         super.onPause()
     }
 
+
+
     private fun ActivityHomeBinding.initPagers() {
         val pagerAdapter: QMUIFragmentPagerAdapter = object : QMUIFragmentPagerAdapter(
             supportFragmentManager
@@ -72,12 +77,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 return when (position) {
                     0 -> HomeFragment()
                     1 -> RecordFragment()
+                    2 -> RemoteControlFragment()
                     else -> HomeFragment()
                 }
             }
 
             override fun getCount(): Int {
-                return 2
+                return 3
             }
         }
         pager.adapter = pagerAdapter
@@ -98,9 +104,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         ).build(getContext())
 
         val historyTab: QMUITab = tabBuilder.setText("记录").build(getContext())
-
+        val control: QMUITab = tabBuilder.setText("遥控器").build(getContext())
         tabs.addTab(mainTab)
         tabs.addTab(historyTab)
+        tabs.addTab(control)
 
         tabs.setupWithViewPager(pager, false)
         tabs.mode = QMUITabSegment.MODE_FIXED
