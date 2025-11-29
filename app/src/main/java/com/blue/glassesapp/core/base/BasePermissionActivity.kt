@@ -25,12 +25,22 @@ abstract class BasePermissionActivity<T : ViewDataBinding>(layoutId: Int) :
         Manifest.permission.CAMERA,
         Manifest.permission.ACCESS_WIFI_STATE,
     ).apply {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            addAll(
+                arrayOf(
+                    Manifest.permission.ACTIVITY_RECOGNITION
+                )
+            )
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             addAll(
                 arrayOf(
                     Manifest.permission.BLUETOOTH_SCAN,
                     Manifest.permission.BLUETOOTH_CONNECT,
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACTIVITY_RECOGNITION
                 )
             )
         } else {

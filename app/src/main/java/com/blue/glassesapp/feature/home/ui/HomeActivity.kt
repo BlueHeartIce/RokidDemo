@@ -21,6 +21,7 @@ import com.blue.armobile.databinding.ActivityHomeBinding
 import com.blue.glassesapp.core.base.BaseActivity
 import com.blue.glassesapp.core.service.DeviceMonitorService
 import com.blue.glassesapp.core.utils.CommonModel
+import com.blue.glassesapp.core.utils.StepCounterHelper
 import com.blue.glassesapp.feature.home.vm.HomeVm
 import com.google.gson.Gson
 import com.qmuiteam.qmui.arch.QMUIFragment
@@ -55,6 +56,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         if (!ServiceUtils.isServiceRunning(DeviceMonitorService::class.java)) {
             ServiceUtils.startService(DeviceMonitorService::class.java)
         }
+        // 初始化
+        StepCounterHelper.init(this)
+
+
+        // 开始监听步数
+        StepCounterHelper.start { stepsToday ->
+            Log.d("StepCounter", "今日步数: $stepsToday")
+        }
+        // 主动获取当天步数
+        val stepsToday = StepCounterHelper.getTodaySteps() ?: 0
+        Log.d("StepCounter", "主动获取今日步数: $stepsToday")
+
     }
 
 
@@ -78,12 +91,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     0 -> HomeFragment()
                     1 -> RecordFragment()
                     2 -> RemoteControlFragment()
+                    3 -> TestFragment()
                     else -> HomeFragment()
                 }
             }
 
             override fun getCount(): Int {
-                return 3
+                return 4
             }
         }
         pager.adapter = pagerAdapter
@@ -105,9 +119,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
         val historyTab: QMUITab = tabBuilder.setText("记录").build(getContext())
         val control: QMUITab = tabBuilder.setText("遥控器").build(getContext())
+        val testTab: QMUITab = tabBuilder.setText("测试").build(getContext())
         tabs.addTab(mainTab)
         tabs.addTab(historyTab)
         tabs.addTab(control)
+        tabs.addTab(testTab)
 
         tabs.setupWithViewPager(pager, false)
         tabs.mode = QMUITabSegment.MODE_FIXED
@@ -152,11 +168,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
 
     }
-
-
-
-
-
+    override fun onDestroy() {
+        super.onDestroy()
+        StepCounterHelper.stop()
+    }
 
     /**
      * take photo path

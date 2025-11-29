@@ -1,8 +1,6 @@
 package com.blue.glassesapp.feature.home.vm
 
 import android.app.Application
-import android.bluetooth.BluetoothManager
-import android.content.Context
 import android.graphics.Bitmap
 import android.util.Size
 import androidx.lifecycle.AndroidViewModel
@@ -13,7 +11,6 @@ import com.blankj.utilcode.util.TimeUtils
 import com.blue.glassesapp.common.enums.BusinessType
 import com.blue.glassesapp.common.enums.InteractionDirection
 import com.blue.glassesapp.common.model.GlassesLinkState
-import com.blue.glassesapp.common.model.bindmodel.HidLinkModel
 import com.blue.glassesapp.core.db.DBManager
 import com.blue.glassesapp.core.db.entity.GlassesRecordModel
 import com.blue.glassesapp.core.utils.AppInternalFileUtil
@@ -23,6 +20,7 @@ import com.blue.glassesapp.core.utils.CxrUtil
 import com.blue.glassesapp.core.utils.hid.BluetoothHidManager
 import com.blue.glassesapp.feature.home.ui.adapter.RecordAdapter
 import com.rokid.cxr.client.extend.CxrApi
+import com.rokid.cxr.client.extend.callbacks.GlassVersionCallback
 import com.rokid.cxr.client.extend.callbacks.PhotoResultCallback
 import com.rokid.cxr.client.extend.listeners.AiEventListener
 import com.rokid.cxr.client.extend.listeners.AudioStreamListener
@@ -69,8 +67,12 @@ class HomeVm(val appContext: Application) : AndroidViewModel(appContext) {
         if (glassesInfo.value?.glassesLinkState == GlassesLinkState.UNCONNECTED || glassesInfo.value?.glassesLinkState == GlassesLinkState.CONNECT_FAILED) {
             CxrUtil.initGlassesLink(appContext.applicationContext) {
                 if (it == GlassesLinkState.CONNECTED) {
-
-                        BluetoothHidManager.initLink(appContext, CommonModel.deviceMacAddress)
+                    BluetoothHidManager.initLink(appContext, CommonModel.deviceMacAddress)
+                    CxrUtil.cxrInstance.checkGlassVersion (object : GlassVersionCallback {
+                        override fun onGlassVersion(p0: Boolean, p1: String?) {
+                            LogUtils.d( "glassVersion",p0, p1)
+                        }
+                    })
                 }
             }
         }
@@ -277,5 +279,6 @@ class HomeVm(val appContext: Application) : AndroidViewModel(appContext) {
 
         }
     }
+
 
 }

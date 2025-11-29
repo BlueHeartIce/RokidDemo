@@ -4,14 +4,15 @@ import android.Manifest
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import androidx.annotation.RequiresPermission
-import com.blankj.utilcode.util.FileIOUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blue.armobile.R
 import com.blue.glassesapp.common.model.BluetoothLinkState
 import com.blue.glassesapp.common.model.GlassesLinkState
 import com.rokid.cxr.client.extend.CxrApi
+import com.rokid.cxr.client.extend.callbacks.ApkStatusCallback
 import com.rokid.cxr.client.extend.callbacks.BluetoothStatusCallback
+import com.rokid.cxr.client.extend.infos.RKAppInfo
 import com.rokid.cxr.client.extend.listeners.CustomViewListener
 import com.rokid.cxr.client.utils.ValueUtil
 import kotlinx.coroutines.MainScope
@@ -20,6 +21,11 @@ import kotlinx.coroutines.launch
 
 object CxrUtil {
     const val TAG = "CxrUtil"
+
+    val cxrInstance: CxrApi by lazy {
+        CxrApi.getInstance()
+    }
+
     fun initLocalDeviceInfo() {
         CommonModel.deviceDeviceName = SPUtils.getInstance().getString(ConsModel.SP_KEY_DEVICE_NAME)
         CommonModel.deviceMacAddress = SPUtils.getInstance().getString(ConsModel.SP_KEY_MAC_ADDRESS)
@@ -340,7 +346,7 @@ object CxrUtil {
     /**
      * 初始化眼睛连接
      */
-    @androidx.annotation.RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT)
+    @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
     fun initGlassesLink(appContext: Context, action: (GlassesLinkState) -> Unit) {
         if (CommonModel.deviceMacAddress.isNotEmpty()) {
             connectGlasses(
@@ -350,7 +356,7 @@ object CxrUtil {
                 CommonModel.deviceMacAddress,
                 action
             )
-            MainScope().launch{
+            MainScope().launch {
                 while (true) {
                     delay(5000)
 
@@ -402,6 +408,45 @@ object CxrUtil {
     }
 
 
+    /**
+     * 启动 APK 上传并安装。
+     *
+     * @param var1 APK 文件的本地路径 (String Path)。
+     * @return Boolean 返回方法是否成功启动了上传过程 (同步结果)。
+     */
+    fun startUploadApk(var1: String?, var2: ApkStatusCallback?): Boolean {
+        if (var1.isNullOrBlank() || !var1.endsWith(".apk", true)) {
+            LogUtils.e(TAG, "无效的 APK 文件路径: $var1")
+            return false
+        }
+        LogUtils.d(TAG, "开始上传并安装 APK: $var1")
+        // 📢 实际代码: 替换为 Rokid SDK 1.0.4 的上传/安装接口调用，并将 var2 作为回调传入。
+        // mGlassesCore.installApp(var1, object : RokidInstallCallback { ... })
+        return CxrApi.getInstance().startUploadApk(var1, var2)
+    }
 
+    /**
+     * 卸载应用。
+     *
+     * @param var1 要卸载应用的包名。
+     * @return CxrStatus? 返回卸载操作的同步状态。
+     */
+    fun uninstallApk(var1: String?, var2: ApkStatusCallback?): ValueUtil.CxrStatus? {
+        LogUtils.d(TAG, "开始卸载应用: $var1")
+        // 📢 实际代码: 替换为 Rokid SDK 1.0.4 的卸载接口调用。
+        return cxrInstance.uninstallApk(var1, var2)
+    }
+
+    /**
+     * 打开应用。
+     *
+     * @param var1 包含应用信息的 RKAppInfo 对象。
+     * @return CxrStatus? 返回打开操作的同步状态。
+     */
+    fun openApp(var1: RKAppInfo, var2: ApkStatusCallback): ValueUtil.CxrStatus? {
+        val packageName = var1.packageName
+        LogUtils.d(TAG, "开始打开应用: $packageName")
+        return CxrApi.getInstance().openApp(var1, var2)
+    }
 
 }
